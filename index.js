@@ -1,73 +1,47 @@
-const express = require('express')
-const path = require('path')
+require('isomorphic-fetch');
+const Koa = require('koa');
+const next = require('next');
+const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth');
 const dotenv = require('dotenv');
+const { verifyRequest } = require('@shopify/koa-shopify-auth');
+const session = require('koa-session');
+
 dotenv.config();
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const createError = require('http-errors');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const cors = require('cors')
-//const jwt = require('./config/jwt-config');
-const errorHandler = require('./config/error-handler');
-const app = express()
-require('./config/passport')(passport);
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-//app.use(jwt());
-const db = require('./config/keys').mongoURI;
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    req.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+
+const port = parseInt(process.env.PORT, 10) || 3000;
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
+
+const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env;
+
+app.prepare().then(() => {
+  const server = new Koa();
+  server.use(session({ sameSite: 'none', secure: true }, server));
+  server.keys = [SHOPIFY_API_SECRET_KEY];
+
+  server.use(
+    createShopifyAuth({
+      apiKey: SHOPIFY_API_KEY,
+      secret: SHOPIFY_API_SECRET_KEY,
+      scopes: ['read_products'],
+      afterAuth(ctx) {
+        const { shop, accessToken } = ctx.session;
+
+        ctx.redirect('/');
+      },
+    }),
+  );
+
+  server.use(verifyRequest());
+  server.use(async (ctx) => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+    ctx.res.statusCode = 200;
+
   });
-  // var whitelist = ['https://8ac54a0281c2.ngrok.io','http://8ac54a0281c2.ngrok.io']
-  // var corsOptionsDelegate = function (req, callback) {
-  //   var corsOptions;
-  //   if (whitelist.indexOf(req.header('Origin')) !== -1) {
-  //     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  //   } else {
-  //     corsOptions = { origin: false } // disable CORS for this request
-  //   }
-  //   callback(null, corsOptions) // callback expects two parameters: error and options
-  // }
-  // app.use(cors(corsOptionsDelegate));
- 
-// catch 404 and forward to error handler
-app.use(passport.initialize());
-app.use(passport.session());
-app.use('/', require('./routes/index.js'));
 
-
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
-
-// error handler
-app.use(errorHandler);
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-if(err.status==401){
-  res.json({message:"gdfgdfg"})
-}
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // render the error page
- 
-  res.status(err.status || 500);
-  res.send('error');
+  server.listen(port, () => {
+    console.log(`> Ready on http://localhost:${port}`);
+  });
 });
-
-var port = process.env.PORT || 5000
-app.listen(port)
-console.log('server started ' + port)
