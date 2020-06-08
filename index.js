@@ -5,9 +5,7 @@ const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth');
 const dotenv = require('dotenv');
 const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
-const { default: graphQLProxy } = require('@shopify/koa-shopify-graphql-proxy');
-const { ApiVersion } = require('@shopify/koa-shopify-graphql-proxy');
-import ApolloClient from 'apollo-boost';
+
 dotenv.config();
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -26,15 +24,19 @@ app.prepare().then(() => {
     createShopifyAuth({
       apiKey: SHOPIFY_API_KEY,
       secret: SHOPIFY_API_SECRET_KEY,
-      scopes: ['read_products', 'write_products'],
+      scopes: ['read_products'],
       afterAuth(ctx) {
         const { shop, accessToken } = ctx.session;
-
+        ctx.cookies.set('shopOrigin', shop, {
+          httpOnly: false,
+          secure: true,
+          sameSite: 'none'
+        });
         ctx.redirect('/');
       },
     }),
   );
-  server.use(graphQLProxy({version: ApiVersion.October19}))
+
   server.use(verifyRequest());
   server.use(async (ctx) => {
     await handle(ctx.req, ctx.res);
