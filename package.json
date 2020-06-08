@@ -17,7 +17,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@shopify/app-bridge-react": "^1.24.0",
     "@shopify/koa-shopify-auth": "^3.1.63",
     "@shopify/koa-shopify-graphql-proxy": "^4.0.0",
     "@shopify/polaris": "^4.25.0",
@@ -26,7 +25,6 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "js-cookie": "^2.2.1",
     "koa": "^2.12.0",
     "koa-session": "^6.0.0",
     "next": "^9.4.4",

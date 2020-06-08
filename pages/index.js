@@ -1,4 +1,5 @@
 import { EmptyState, Layout, Page } from '@shopify/polaris';
+<<<<<<< HEAD
 import { ResourcePicker } from '@shopify/app-bridge-react';
 import store from 'store-js';
 import ResourceListWithProducts from '../components/ResourceList';
@@ -49,5 +50,24 @@ class Index extends React.Component {
     store.set('ids', idsFromResources);
   };
 }
+=======
+const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
+const Index = () => (
+<Page>
+<Layout>
+<EmptyState
+        heading="Discount your products temporarily"
+        action={{
+          content: 'Select products',
+          onAction: () => console.log('clicked'),
+        }}
+        image={img}
+      >
+        <p>Select products to change their price temporarily.</p>
+      </EmptyState>
+    </Layout>
+  </Page>
+);
+>>>>>>> parent of 81c4ed9...  Resource picker
 
 export default Index;

@@ -1,6 +1,7 @@
 import App from 'next/app';
 import Head from 'next/head';
 import { AppProvider } from '@shopify/polaris';
+<<<<<<< HEAD
 import { Provider } from '@shopify/app-bridge-react';
 import '@shopify/polaris/styles.css';
 import Cookies from 'js-cookie';
@@ -13,18 +14,21 @@ const client = new ApolloClient({
   },
 });
 
+=======
+import '@shopify/polaris/styles.css';
+import translations from '@shopify/polaris/locales/en.json';
+>>>>>>> parent of 81c4ed9...  Resource picker
 class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    const config = { apiKey: API_KEY, shopOrigin: Cookies.get("shopOrigin"), forceRedirect: true };
-
     return (
       <React.Fragment>
         <Head>
           <title>Sample App</title>
           <meta charSet="utf-8" />
         </Head>
+<<<<<<< HEAD
         <Provider config={config}>
           <AppProvider>
             <ApolloProvider client={client}>
@@ -32,6 +36,12 @@ class MyApp extends App {
             </ApolloProvider>
           </AppProvider>
         </Provider>
+=======
+        <AppProvider i18n={translations}>
+        <Component {...pageProps} />
+        </AppProvider>
+         
+>>>>>>> parent of 81c4ed9...  Resource picker
       </React.Fragment>
     );
   }
