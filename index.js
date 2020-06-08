@@ -43,7 +43,7 @@ app.prepare().then(() => {
         });
         const registration = await registerWebhook({
           address: `${HOST}/webhooks/products/create`,
-          topic: 'PRODUCTS_CREATE',
+          topic: ['read_products', 'write_products'],
           accessToken,
           shop,
           apiVersion: ApiVersion.October19
