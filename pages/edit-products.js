@@ -14,7 +14,6 @@ import {
 import store from 'store-js';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
-
 const UPDATE_PRICE = gql`
  mutation productVariantUpdate($input: ProductVariantInput!) {
    productVariantUpdate(input: $input) {
