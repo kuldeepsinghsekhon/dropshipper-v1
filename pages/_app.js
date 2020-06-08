@@ -9,7 +9,7 @@ import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
   fetchOptions: {
-    credentials: 'include',
+    credentials: 'include'
   },
 });
 
@@ -26,10 +26,10 @@ class MyApp extends App {
           <meta charSet="utf-8" />
         </Head>
         <Provider config={config}>
-          <AppProvider>
-            <ApolloProvider client={client}>
-              <Component {...pageProps} />
-            </ApolloProvider>
+        <AppProvider>
+        <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
           </AppProvider>
         </Provider>
       </React.Fragment>
