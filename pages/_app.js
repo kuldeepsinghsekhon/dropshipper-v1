@@ -18,7 +18,7 @@ const client = new ApolloClient({
   },
 });
 const app = createApp({
-  apiKey: 'e4414e65bcc81be4c7eb5e153132934e',
+  apiKey: '51aaf62b949ace2ecbb2ca59efa80565',
   shopOrigin: Cookies.get("shopOrigin"),
 });
 class MyApp extends App {  

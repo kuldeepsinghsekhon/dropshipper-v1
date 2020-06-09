@@ -103,13 +103,15 @@ app.prepare().then(() => {
   server.use(async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
+   console.log(ctx.session.shop);
+   console.log(ctx.session.accessToken);
     ctx.res.statusCode = 200;
   });
  
  
   server.use(router.allowedMethods());
   server.use(router.routes());
-  // mongoose
+  mongoose
   // .connect(
   //   db,
   //   { useNewUrlParser: true }
