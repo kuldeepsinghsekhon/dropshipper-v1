@@ -37,7 +37,13 @@ app.prepare().then(() => {
       scopes: ['read_products', 'write_products'],
       async  afterAuth(ctx) {
         const {shop, accessToken} = ctx.session;
-        console.log(accessToken)
+        console.log("App SetupExicuted")
+        console.log("New shopOrigion AppToken "+shop +' '+ accessToken)
+        ctx.cookies.set('shopOrigin', shop, {
+          httpOnly: false,
+          secure: true,
+          sameSite: 'none'
+        });
         let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
         axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
         } ).catch(function (error) {
@@ -54,11 +60,7 @@ app.prepare().then(() => {
       //         } 
       //     }
       // );      
-        ctx.cookies.set('shopOrigin', shop, {
-          httpOnly: false,
-          secure: true,
-          sameSite: 'none'
-        });
+        
         // ctx.cookies.set('accessToken', accessToken, {
         //   httpOnly: false,
         //   secure: true,
@@ -90,10 +92,10 @@ app.prepare().then(() => {
   router.post('/webhooks/products/create', webhook, (ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
   });
-  // router.get('/server-routes/test', (ctx) => {
-  //   console.log('received webhook: ctx.state.webhook');
-  //   ctx.body="oter html page route"
-  // });
+  router.get('/other-routes/test', (ctx) => {
+    console.log('It works');
+    ctx.body="oter html page route"
+  });
   // module.exports = function *(app){
   //   server.use(rootRouter.routes());
 
