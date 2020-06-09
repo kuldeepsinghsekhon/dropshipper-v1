@@ -16,13 +16,18 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-
+var mongoose = require('mongoose');
+const db = require('./config/keys').mongoURI;
 const {
   SHOPIFY_API_SECRET_KEY,
   SHOPIFY_API_KEY,
   HOST,
 } = process.env;
-
+mongoose.connect(
+    db,{ useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 app.prepare().then(() => {
   const server = new Koa();
   const router = new Router();
