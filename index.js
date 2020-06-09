@@ -97,7 +97,7 @@ app.prepare().then(() => {
   // module.exports = function *(app){
   //   server.use(rootRouter.routes());
 
-  server.use(graphQLProxy({ version: ApiVersion.April19 }));
+  server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
   server.use(async (ctx) => {
