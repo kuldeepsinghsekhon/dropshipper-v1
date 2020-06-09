@@ -96,7 +96,7 @@ app.prepare().then(() => {
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
-  router.get('*', verifyRequest(), async (ctx) => {
+  router.get('/auth', verifyRequest(), async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;

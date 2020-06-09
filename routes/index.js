@@ -16,7 +16,9 @@ const router = new Router();
     ctx.body="second page";
   });
   const webhook = receiveWebhook({ secret: "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" });
-
+router.post('/server-routes/post',(ctx)=>{
+  ctx.boody=ctx.request;
+})
   router.post('/webhooks/products/create', webhook, (ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
     pr_webhook=Product_webhook(ctx.request.query);
