@@ -40,7 +40,9 @@ class Selling_products extends React.Component {
       container.images= pimages.map((image)=>image.originalSrc)
      console.log(container.images)
       axios.post(url,container).then( ( response ) => {
-        this.shop_products()
+        const ids =response.data.map((product) => product.shopifyProductId);
+        store.set('ids', ids);  
+       //console.log(response)
                
       } ).catch(function (error) {
 
@@ -48,11 +50,10 @@ class Selling_products extends React.Component {
     });
   }
   shop_products(){
-    console.log(shop)
     let url="https://aladdin-dropshipper-server.herokuapp.com/shop_products";
     axios.post(url,{"shop":shop}).then( (response)=>{ 
-      // const ids =response.data.map((product) => product.shopifyProductId);
-      // store.set('ids', ids);    
+      const ids =response.data.map((product) => product.shopifyProductId);
+      store.set('ids', ids);    
       // console.log(ids)    
     } ).catch(function (error) {
       console.log(error);
@@ -60,7 +61,7 @@ class Selling_products extends React.Component {
   }
   componentDidMount() {
     const userRole=this.state.userRole;
-   // this.shop_products();
+    this.shop_products();
   // store.set('ids',[]);
     console.log(accessToken)
     console.log(shop)
