@@ -245,22 +245,23 @@ class MyApp extends App {
           <title>dropshipper</title>
           <meta charSet="utf-8" />
         </Head> 
+      
+        <Provider config={config}>     
+        <AppProvider  i18n={translations}>
+       
+        <ApolloProvider client={client}>
         <Frame topBar={topBarMarkup} 
         navigation={navigationMarkup}
         showMobileNavigation={mobileNavigationActive}
         onNavigationDismiss={()=>this.handleNavigationToggle()}
         >
-        <Provider config={config}>     
-        <AppProvider  i18n={translations}>
-       
-        <ApolloProvider client={client}>
             <Component {...pageProps} />
-           
+            </Frame>  
           </ApolloProvider>
         
           </AppProvider> 
           </Provider> 
-          </Frame>      
+              
       </React.Fragment>
     );
   }
