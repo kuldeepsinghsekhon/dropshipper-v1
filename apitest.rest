@@ -6,6 +6,7 @@ GET https://dropshipper-v1.herokuapp.com/server/tes
 
 ###
 POST https://dropshipper-v1.herokuapp.com/webhooks/products/create
+X-Shopify-Access-Token: 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
 Content-Type:application/json
 
  {

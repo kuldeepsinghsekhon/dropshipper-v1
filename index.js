@@ -92,11 +92,17 @@ app.prepare().then(() => {
   });
   // module.exports = function *(app){
     
-
+    const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
+    router.post('/server-routes/post',(ctx)=>{
+      ctx.boody=ctx.request;
+    })
+    router.post('/webhooks/products/create', webhook, (ctx) => {
+      console.log('received webhook: ', ctx.state.webhook);
+    });
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
-  router.get('/auth', verifyRequest(), async (ctx) => {
+  router.get('*', verifyRequest(), async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
