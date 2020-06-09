@@ -65,11 +65,11 @@ app.prepare().then(() => {
           secure: true,
           sameSite: 'none'
         });
-        ctx.cookies.set('accessToken', accessToken, {
-          httpOnly: false,
-          secure: true,
-          sameSite: 'none'
-        });
+        // ctx.cookies.set('accessToken', accessToken, {
+        //   httpOnly: false,
+        //   secure: true,
+        //   sameSite: 'none'
+        // });
         // const registration = await registerWebhook({
         //   address: `${HOST}/webhooks/products/create`,
         //   topic: 'PRODUCTS_CREATE',
