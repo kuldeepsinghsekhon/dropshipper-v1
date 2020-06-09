@@ -71,7 +71,7 @@ app.prepare().then(() => {
           shop,
           apiVersion: ApiVersion.October19
         });
-
+ 
         if (registration.success) {
           console.log('Successfully registered webhook!');
         } else {
@@ -85,7 +85,9 @@ app.prepare().then(() => {
   );
 
 
-  
+  const wkcheck=`${HOST}/webhooks/products/create`;
+  console.log(wkcheck);
+  console.log(SHOPIFY_API_SECRET_KEY);
   router.get('/server-routes/test', (ctx) => {
    // console.log('received webhook: ctx.state.webhook');
     ctx.body="oter html page route"
