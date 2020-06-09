@@ -54,7 +54,7 @@ app.prepare().then(() => {
         } else {
           console.log('Failed to register webhook', registration.result);
         }
-       // await getSubscriptionUrl(ctx, accessToken, shop);
+        await getSubscriptionUrl(ctx, accessToken, shop);
       }
     })
   );
@@ -71,10 +71,9 @@ app.prepare().then(() => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
-  });
-
-  server.use(router.allowedMethods());
-  server.use(router.routes());
+   });
+   server.use(router.allowedMethods());
+   server.use(router.routes());
 
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
