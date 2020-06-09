@@ -4,33 +4,12 @@ import { AppProvider } from '@shopify/polaris';
 import { Provider } from '@shopify/app-bridge-react';
 import Cookies from "js-cookie";
 import '@shopify/polaris/styles.css';
-import translations from '@shopify/polaris/locales/en.json';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-
-const client = new ApolloClient({
-  fetchOptions: {
-    credentials: 'include',
-  },
-});
 
 class MyApp extends App {
-
-  state = {
-    toastActive: false,
-    isLoading:false,
-    isDirty:false,
-    searchActive:false,
-    searchValue:'',
-    userMenuActive:false,
-    mobileNavigationActive:false,
-    modalActive:false
-  };
-
   render() {
     const { Component, pageProps } = this.props;
     const config = { apiKey: API_KEY, shopOrigin: Cookies.get("shopOrigin"), forceRedirect: true };
-    
+
     return (
       <React.Fragment>
         <Head>
@@ -38,10 +17,8 @@ class MyApp extends App {
           <meta charSet="utf-8" />
         </Head>
         <Provider config={config}>
-          <AppProvider   i18n={translations}>
-            <ApolloProvider client={client}>
-              <Component {...pageProps} />
-            </ApolloProvider>
+          <AppProvider>
+            <Component {...pageProps} />
           </AppProvider>
         </Provider>
       </React.Fragment>
