@@ -22,14 +22,14 @@ const db = require('./config/keys').mongoURI;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const path = require('path')
-const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST, } = process.env;
+const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST } = process.env;
 
 app.prepare().then(() => {
   const server = new Koa();
   const router = new Router();
   server.use(session({ sameSite: 'none', secure: true }, server));
   server.keys = [SHOPIFY_API_SECRET_KEY];
-
+  const webhook = receiveWebhook({ secret: SHOPIFY_API_SECRET_KEY });
   server.use(
     createShopifyAuth({
       apiKey: SHOPIFY_API_KEY,
@@ -88,8 +88,13 @@ app.prepare().then(() => {
 
   );
 
-
-  const webhook = receiveWebhook({ secret: SHOPIFY_API_SECRET_KEY });
+  server.use(graphQLProxy({version: ApiVersion.October19}))
+    router.get('*', verifyRequest(), (ctx) => {
+      // handle(ctx.req, ctx.res);
+      ctx.respond = false;
+      ctx.res.statusCode = 200;
+    });
+ 
 
   router.post('/webhooks/products/create', webhook, (ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
@@ -100,15 +105,6 @@ app.prepare().then(() => {
   });
   // module.exports = function *(app){
    // server.use(rootRouter.routes());
-
-  server.use(graphQLProxy({version: ApiVersion.October19}))
-
-  
-    router.get('*', verifyRequest(), (ctx) => {
-       handle(ctx.req, ctx.res);
-      ctx.respond = false;
-      ctx.res.statusCode = 200;
-    });
 
 
   server.use(router.allowedMethods());
