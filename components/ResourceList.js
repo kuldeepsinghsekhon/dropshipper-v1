@@ -54,7 +54,7 @@ class ResourceListWithProducts extends React.Component {
         '/edit-products',
       );
     };
-    const { selectedItems } = this.state;
+
     const twoWeeksFromNow = new Date(Date.now() + 12096e5).toDateString();
     return (
       <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
@@ -68,7 +68,6 @@ class ResourceListWithProducts extends React.Component {
                 showHeader
                 resourceName={{ singular: 'Product', plural: 'Products' }}
                 items={data.nodes}
-                selectedItems={selectedItems}
                 onSelectionChange={(items)=>{
                   const idsFromResources = items.map((item) => item);
                   
@@ -76,12 +75,11 @@ class ResourceListWithProducts extends React.Component {
                 }}
                 promotedBulkActions={ [
                   {
-                    content: 'Submit Products',
-                    onAction: () => {
-                      alert(selectedItems)},
+                    content: 'Edit customers',
+                    onAction: () => console.log('Todo: implement bulk edit'),
                   },
                 ]}
-               /* bulkActions={[
+                bulkActions={[
                   {
                     content: 'Add tags',
                     onAction: () => console.log(selectedItems),
@@ -94,7 +92,7 @@ class ResourceListWithProducts extends React.Component {
                     content: 'Delete customers',
                     onAction: () => console.log('Todo: implement bulk delete'),
                   },
-                ]}*/
+                ]}
                 renderItem={(item) => {
                   const media = (
                     <Thumbnail
