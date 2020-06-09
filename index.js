@@ -95,7 +95,7 @@ app.prepare().then(() => {
     ctx.body="oter html page route"
   });
   // module.exports = function *(app){
-  //   server.use(rootRouter.routes());
+    
 
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
@@ -106,9 +106,10 @@ app.prepare().then(() => {
     ctx.res.statusCode = 200;
   });
  
- 
   server.use(router.allowedMethods());
+  server.use(rootRouter.routes());
   server.use(router.routes());
+
   mongoose
   .connect(
     db,
