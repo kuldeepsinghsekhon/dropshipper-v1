@@ -22,7 +22,7 @@ const db = require('./config/keys').mongoURI;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const path = require('path')
-const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST } = process.env;
+const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST} = process.env;
 
 app.prepare().then(() => {
   const server = new Koa();
@@ -88,9 +88,8 @@ app.prepare().then(() => {
 
   );
 
-  server.use(graphQLProxy({version: ApiVersion.October19}))
-    router.get('*', verifyRequest(), (ctx) => {
-      // handle(ctx.req, ctx.res);
+    router.get('*', verifyRequest(), async function(ctx){
+       await handle(ctx.req, ctx.res);
       ctx.respond = false;
       ctx.res.statusCode = 200;
     });
@@ -109,6 +108,8 @@ app.prepare().then(() => {
 
   server.use(router.allowedMethods());
   server.use(router.routes());
+  server.use(graphQLProxy({version: ApiVersion.October19}))
+
   //mongoose
   // .connect(
   //   db,
