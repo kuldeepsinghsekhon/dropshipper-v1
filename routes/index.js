@@ -2,7 +2,10 @@ const Product=require('../models/product');
 const DropshipProduct=require('../models/dropship_product')
 const User=require('../models/user')
 const Shop=require('../models/shop')
+const Product_webhook=require('../models/webhook')
 const Router = require('koa-router');
+const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
+
 const router = new Router();
   router.get('/server-routes/test', (ctx) => {
     console.log('received webhook: ctx.state.webhook');
@@ -11,6 +14,14 @@ const router = new Router();
   router.get('/server/tes', (ctx) => {
     //console.log('received webhook: ctx.state.webhook');
     ctx.body="second page";
+  });
+  const webhook = receiveWebhook({ secret: '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' });
+
+  router.post('/webhooks/products/create', webhook, (ctx) => {
+    console.log('received webhook: ', ctx.state.webhook);
+    pr_webhook=Product_webhook(ctx.request.query);
+    pr_webhook.save();
+    ctx.response.status = 200;
   });
   // router.get('/products', async function(ctx){
       
