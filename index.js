@@ -10,7 +10,7 @@ const { default: graphQLProxy } = require('@shopify/koa-shopify-graphql-proxy');
 const { ApiVersion } = require('@shopify/koa-shopify-graphql-proxy');
 const Router = require('koa-router');
 const { receiveWebhook, registerWebhook } = require('@shopify/koa-shopify-webhooks');
-//const getSubscriptionUrl = require('./server/getSubscriptionUrl');
+const getSubscriptionUrl = require('./server/getSubscriptionUrl');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -43,7 +43,7 @@ app.prepare().then(() => {
         });
         const registration = await registerWebhook({
           address: `${HOST}/webhooks/products/create`,
-          topic: ['read_products', 'write_products'],
+          topic: 'PRODUCTS_CREATE',
           accessToken,
           shop,
           apiVersion: ApiVersion.October19
@@ -71,9 +71,10 @@ app.prepare().then(() => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
-   });
-   server.use(router.allowedMethods());
-   server.use(router.routes());
+  });
+
+  server.use(router.allowedMethods());
+  server.use(router.routes());
 
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
