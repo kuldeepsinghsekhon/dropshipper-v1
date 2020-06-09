@@ -24,11 +24,10 @@ const {
   SHOPIFY_API_KEY,
   HOST,
 } = process.env;
-// mongoose.connect(
-//     db,{ useNewUrlParser: true }
-//   )
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
+mongoose.connect(
+    db,{ useNewUrlParser: true }
+  ).then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 app.prepare().then(() => {
   const server = new Koa();
   const router = new Router();
