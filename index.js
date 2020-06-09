@@ -80,6 +80,12 @@ app.prepare().then(() => {
   server.use(graphQLProxy({ version: ApiVersion.April19 }));
 
   router.get('*', verifyRequest(), async (ctx) => {
+    const { shop, accessToken } = ctx.session;
+        ctx.cookies.set("shopOrigin", shop, {
+          httpOnly: false,
+          secure: true,
+          sameSite: 'none'
+        });
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
