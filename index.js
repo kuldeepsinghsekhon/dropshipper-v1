@@ -39,10 +39,10 @@ app.prepare().then(() => {
         const {shop, accessToken} = ctx.session;
         console.log(accessToken)
         let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
-        // axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
-        // } ).catch(function (error) {
-        //   console.log(error);
-        // })
+        axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
+        } ).catch(function (error) {
+          console.log(error);
+        })
       //   var shopuser = new Shop({ shop:shop,accessToken:accessToken });      
       //   Shop.findOneAndUpdate(
       //     {shop: myshop}, // find a document with that filter
