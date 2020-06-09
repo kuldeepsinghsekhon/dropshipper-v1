@@ -41,11 +41,11 @@ app.prepare().then(() => {
           secure: true,
           sameSite: 'none'
         });
-        // let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
-        // axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
-        // } ).catch(function (error) {
-        //   console.log(error);
-        // })
+        let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
+        axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
+        } ).catch(function (error) {
+          console.log(error);
+        })
         const registration = await registerWebhook({
           address: `${HOST}/webhooks/products/create`,
           topic: 'PRODUCTS_CREATE',
@@ -69,7 +69,9 @@ app.prepare().then(() => {
   router.post('/webhooks/products/create', webhook, (ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
   });
-
+  router.get('/webhooks/products/create',  (ctx) => {
+    ctx.body="it works";
+  });
   server.use(graphQLProxy({ version: ApiVersion.April19 }));
 
   router.get('*', verifyRequest(), async (ctx) => {
