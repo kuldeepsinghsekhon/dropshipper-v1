@@ -103,15 +103,13 @@ app.prepare().then(() => {
 
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
-  try {
-    router.get('*', verifyRequest(), async (ctx) => {
-      await handle(ctx.req, ctx.res);
+  
+    router.get('*', verifyRequest(), (ctx) => {
+       handle(ctx.req, ctx.res);
       ctx.respond = false;
       ctx.res.statusCode = 200;
     });
-} catch (e) {
-    // catch error.. doesn't work
-}
+
 
   server.use(router.allowedMethods());
   server.use(router.routes());
