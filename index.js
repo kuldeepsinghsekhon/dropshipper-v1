@@ -94,12 +94,12 @@ app.prepare().then(() => {
   //   console.log('received webhook: ctx.state.webhook');
   //   ctx.body="oter html page route"
   // });
-  //module.exports = function *(app){
-    server.use(rootRouter.routes());
+  // module.exports = function *(app){
+  //   server.use(rootRouter.routes());
 
   server.use(graphQLProxy({ version: ApiVersion.April19 }));
 
-  router.get('*', verifyRequest(), async (ctx) => {
+  router.get('*', verifyRequest(),  (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
