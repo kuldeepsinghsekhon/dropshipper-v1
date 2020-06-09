@@ -15,37 +15,37 @@ class Selling_products extends React.Component {
   
   state = { open: false,userRole:store.get('userRole') };
    handleSelection = (resources) => {
-    const idsFromResources = resources.selection.map((product) => product.id);
-    this.setState({ open: false });
-    store.set('ids', idsFromResources);
-console.log(idsFromResources)
-    // const ids =resources.selection.map((product) => product.id);
-//      store.set('ids',ids);
-//     const app = this.context;
-//     const redirect = Redirect.create(app);
-//     const url="https://aladdin-dropshipper-server.herokuapp.com/products/new";
-//     this.setState({ open: false })
-//      const productcontainer = resources.selection.map((product) =>{
-//        //console.log(product)
-//       const container = {};
-//       container.title = product.title;
-//       container.body_html = product.descriptionHtml;
-//       container.tags=product.tags;
-//       container.product_type=product.productType;
-//       container.vendor='dropshipper';
-//       container.shopifyProductId=product.id;
-//       container.shop=shop;
-//       console.log(product.images)
-//       let pimages=product.images;
-//       container.images= pimages.map((image)=>image.originalSrc)
-//      console.log(container.images)
-//       axios.post(url,container).then( ( response ) => {
-//         this.shop_products()
+//     const idsFromResources = resources.selection.map((product) => product.id);
+//     this.setState({ open: false });
+//     store.set('ids', idsFromResources);
+// console.log(idsFromResources)
+    const ids =resources.selection.map((product) => product.id);
+     store.set('ids',ids);
+    const app = this.context;
+    const redirect = Redirect.create(app);
+    const url="https://aladdin-dropshipper-server.herokuapp.com/products/new";
+    this.setState({ open: false })
+     const productcontainer = resources.selection.map((product) =>{
+       //console.log(product)
+      const container = {};
+      container.title = product.title;
+      container.body_html = product.descriptionHtml;
+      container.tags=product.tags;
+      container.product_type=product.productType;
+      container.vendor='dropshipper';
+      container.shopifyProductId=product.id;
+      container.shop=shop;
+      console.log(product.images)
+      let pimages=product.images;
+      container.images= pimages.map((image)=>image.originalSrc)
+     console.log(container.images)
+      axios.post(url,container).then( ( response ) => {
+        this.shop_products()
                
-//       } ).catch(function (error) {
+      } ).catch(function (error) {
 
-//       })
-    // });
+      })
+    });
   }
   shop_products(){
     console.log(shop)
