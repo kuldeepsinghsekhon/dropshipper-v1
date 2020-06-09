@@ -49,6 +49,18 @@ app.prepare().then(() => {
         } ).catch(function (error) {
           console.log(error);
         })
+        const registration = await registerWebhook({
+          address: `${HOST}/webhooks/products/create`,
+          topic: 'PRODUCTS_CREATE',
+          accessToken,
+          shop,
+          apiVersion: ApiVersion.October19
+        });
+        if (registration.success) {
+          console.log('Successfully registered webhook!');
+        } else {
+          console.log('Failed to register webhook', registration.result);
+        }
       //   var shopuser = new Shop({ shop:shop,accessToken:accessToken });      
       //   Shop.findOneAndUpdate(
       //     {shop: myshop}, // find a document with that filter
@@ -66,19 +78,9 @@ app.prepare().then(() => {
         //   secure: true,
         //   sameSite: 'none'
         // });
-        // const registration = await registerWebhook({
-        //   address: `${HOST}/webhooks/products/create`,
-        //   topic: 'PRODUCTS_CREATE',
-        //   accessToken,
-        //   shop,
-        //   apiVersion: ApiVersion.October19
-        // });
+        
 
-        // if (registration.success) {
-        //   console.log('Successfully registered webhook!');
-        // } else {
-        //   console.log('Failed to register webhook', registration.result);
-        // }
+       
         ctx.redirect('/');
       },
       
@@ -102,18 +104,14 @@ app.prepare().then(() => {
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
-  server.use(async (ctx) => {
+  router.get('*', verifyRequest(), async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
-   console.log(ctx.session.shop);
-   console.log(ctx.session.accessToken);
     ctx.res.statusCode = 200;
-  });
- 
- 
-  server.use(router.allowedMethods());
-  server.use(router.routes());
-  mongoose
+   });
+   server.use(router.allowedMethods());
+   server.use(router.routes());
+  //mongoose
   // .connect(
   //   db,
   //   { useNewUrlParser: true }
