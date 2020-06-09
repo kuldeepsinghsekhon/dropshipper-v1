@@ -64,19 +64,19 @@ app.prepare().then(() => {
         //   secure: true,
         //   sameSite: 'none'
         // });
-        // const registration = await registerWebhook({
-        //   address: `${HOST}/webhooks/products/create`,
-        //   topic: 'PRODUCTS_CREATE',
-        //   accessToken,
-        //   shop,
-        //   apiVersion: ApiVersion.October19
-        // });
+        const registration = await registerWebhook({
+          address: `${HOST}/webhooks/products/create`,
+          topic: 'PRODUCTS_CREATE',
+          accessToken,
+          shop,
+          apiVersion: ApiVersion.October19
+        });
 
-        // if (registration.success) {
-        //   console.log('Successfully registered webhook!');
-        // } else {
-        //   console.log('Failed to register webhook', registration.result);
-        // }
+        if (registration.success) {
+          console.log('Successfully registered webhook!');
+        } else {
+          console.log('Failed to register webhook', registration.result);
+        }
         ctx.redirect('/');
       },
       
@@ -90,21 +90,19 @@ app.prepare().then(() => {
   router.post('/webhooks/products/create', webhook, (ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
   });
-  // router.get('/server-routes/test', (ctx) => {
-  //   console.log('received webhook: ctx.state.webhook');
-  //   ctx.body="oter html page route"
-  // });
+  router.get('/server-routes/test', (ctx) => {
+   // console.log('received webhook: ctx.state.webhook');
+    ctx.body="oter html page route"
+  });
   // module.exports = function *(app){
   //   server.use(rootRouter.routes());
 
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
-  server.use(async (ctx) => {
+  router.get('*', verifyRequest(), async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
-   console.log(ctx.session.shop);
-   console.log(ctx.session.accessToken);
     ctx.res.statusCode = 200;
   });
  
