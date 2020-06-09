@@ -9,7 +9,7 @@ const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
 const axios =require('axios');
 const Router = require('koa-router');
-const rootRouter = require('./routes/index');
+//const rootRouter = require('./routes/index');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
 dotenv.config();
 
@@ -99,15 +99,20 @@ app.prepare().then(() => {
     ctx.body="oter html page route"
   });
   // module.exports = function *(app){
-  //   server.use(rootRouter.routes());
+   // server.use(rootRouter.routes());
 
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
-  router.get('*', verifyRequest(), async (ctx) => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false;
-    ctx.res.statusCode = 200;
-  });
+  try {
+    router.get('*', verifyRequest(), async (ctx) => {
+      await handle(ctx.req, ctx.res);
+      ctx.respond = false;
+      ctx.res.statusCode = 200;
+    });
+} catch (e) {
+    // catch error.. doesn't work
+}
+
   server.use(router.allowedMethods());
   server.use(router.routes());
   //mongoose
