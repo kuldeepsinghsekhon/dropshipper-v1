@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const Koa = require('koa');
 const next = require('next');
+const axios =require('axios');
 const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth');
 const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
