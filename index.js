@@ -112,12 +112,12 @@ app.prepare().then(() => {
   server.use(router.allowedMethods());
   server.use(router.routes());
   mongoose
-  // .connect(
-  //   db,
-  //   { useNewUrlParser: true }
-  // )
-  // .then(() => console.log('MongoDB Connected'))
-  // .catch(err => console.log(err));
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
   });
