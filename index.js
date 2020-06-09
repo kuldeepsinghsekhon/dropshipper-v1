@@ -12,7 +12,7 @@ const Router = require('koa-router');
 const rootRouter = require('./routes/index');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
 dotenv.config();
-const Shop=require('./models/shop')
+
 var mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 mongoose
@@ -23,8 +23,8 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+  const port = parseInt(process.env.PORT, 10) || 3000;
+  const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const path = require('path')
@@ -45,10 +45,10 @@ app.prepare().then(() => {
         const {shop, accessToken} = ctx.session;
         console.log(accessToken)
         let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
-        axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
-        } ).catch(function (error) {
-          console.log(error);
-        })
+        // axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
+        // } ).catch(function (error) {
+        //   console.log(error);
+        // })
       //   var shopuser = new Shop({ shop:shop,accessToken:accessToken });      
       //   Shop.findOneAndUpdate(
       //     {shop: myshop}, // find a document with that filter
