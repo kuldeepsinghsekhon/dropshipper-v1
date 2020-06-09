@@ -99,7 +99,8 @@ app.prepare().then(() => {
 
   server.use(graphQLProxy({ version: ApiVersion.April19 }));
 
-  router.get('*', verifyRequest(),  (ctx) => {
+  server.use(verifyRequest());
+  server.use(async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
