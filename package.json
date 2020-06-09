@@ -24,6 +24,7 @@
     "@shopify/polaris": "^4.25.0",
     "@zeit/next-css": "^1.0.1",
     "apollo-boost": "^0.4.9",
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "graphql": "^15.1.0",
     "isomorphic-fetch": "^2.2.1",
@@ -35,6 +36,7 @@
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
-    "store-js": "^2.0.4"
+    "store-js": "^2.0.4",
+    "string-strip-html": "^4.4.7"
   }
 }
