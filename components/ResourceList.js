@@ -47,6 +47,7 @@ class ResourceListWithProducts extends React.Component {
   };
   render() {
     const app = this.context;
+     console.log(store.get('ids'))
     const redirectToProduct = () => {
       const redirect = Redirect.create(app);
       redirect.dispatch(
@@ -58,15 +59,16 @@ class ResourceListWithProducts extends React.Component {
     const twoWeeksFromNow = new Date(Date.now() + 12096e5).toDateString();
     return (
       <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
+      
         {({ data, loading, error }) => {
-          if (loading) { return <div>Loading…</div>; }
+          if (loading) { return <div>Loading...</div>; }
           if (error) { return <div>{error.message}</div>; }
-          console.log(data);
+         
           return (
             <Card>
               <ResourceList
                 showHeader
-                resourceName={{ singular: 'Product', plural: 'Products' }}
+                resourceName={{ singular: 'item', plural: 'items' }}
                 items={data.nodes}
                 onSelectionChange={(items)=>{
                   const idsFromResources = items.map((item) => item);
