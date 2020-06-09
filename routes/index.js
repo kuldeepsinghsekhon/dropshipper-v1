@@ -17,7 +17,7 @@ const router = new Router();
   });
   const webhook = receiveWebhook({ secret: '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' });
 
-  router.post('/webhooks/products/create', webhook, (ctx) => {
+  router.post('/webhooks/products/create',(ctx) => {
     console.log('received webhook: ', ctx.state.webhook);
     pr_webhook=Product_webhook(ctx.request.query);
     pr_webhook.save();
