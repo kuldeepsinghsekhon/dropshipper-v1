@@ -104,13 +104,16 @@ app.prepare().then(() => {
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   server.use(verifyRequest());
-  router.get('*', verifyRequest(), async (ctx) => {
+  server.use(async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
-   });
-   server.use(router.allowedMethods());
-   server.use(router.routes());
+    return
+  });
+ 
+ 
+  server.use(router.allowedMethods());
+  server.use(router.routes());
   //mongoose
   // .connect(
   //   db,
