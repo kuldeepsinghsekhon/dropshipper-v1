@@ -83,7 +83,17 @@ app.prepare().then(() => {
     }),
 
   );
-
+  // app.use(
+  //   // receive webhooks
+  //   receiveWebhook({
+  //     path: '/webhooks/products/create',
+  //     secret: SHOPIFY_SECRET,
+  //     // called when a valid webhook is received
+  //     onReceived(ctx) {
+  //       console.log('received webhook: ', ctx.state.webhook);
+  //     },
+  //   }),
+  // );
 
   const wkcheck=`${HOST}/webhooks/products/create`;
   console.log(wkcheck);
@@ -103,7 +113,6 @@ app.prepare().then(() => {
     });
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
-  server.use(verifyRequest());
   router.get('*', verifyRequest(), async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
