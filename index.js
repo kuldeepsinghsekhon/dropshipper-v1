@@ -35,7 +35,7 @@ app.prepare().then(() => {
     createShopifyAuth({
       apiKey: SHOPIFY_API_KEY,
       secret: SHOPIFY_API_SECRET_KEY,
-      scopes: ['read_products', 'write_products'],
+      scopes: ['read_products', 'write_products','read_orders', 'write_orders'],
       async  afterAuth(ctx) {
         const {shop, accessToken} = ctx.session;
         console.log(accessToken)
@@ -75,6 +75,19 @@ app.prepare().then(() => {
           console.log('Successfully registered orders_webhook!');
         } else {
           console.log('Failed to register orders_webhook', orders_webhook.result);
+        }
+        const orders_webhook1 = await registerWebhook({
+          address: `${HOST}/webhooks/order/create`,
+          topic: 'orders/create',
+          accessToken,
+          shop,
+          apiVersion: ApiVersion.October19
+        });
+ 
+        if (orders_webhook1.success) {
+          console.log('Successfully registered orders_webhook!');
+        } else {
+          console.log('Failed to register orders_webhook', orders_webhook1.result);
         }
         ctx.redirect('/');
       },  
