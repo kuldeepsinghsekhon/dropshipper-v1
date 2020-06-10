@@ -1,10 +1,10 @@
-const Store=require('../models/shop');
+const Shop=require('../models/shop');
 module.exports ={
-    updataToken:function(myshop,newaccessToken){
+    updataToken:function(store,newaccessToken){
         console.log(newaccessToken)
-        var shopifystore = new Store({ shop: myshop,accessToken:newaccessToken });
-        shopifystore.findOneAndUpdate(
-          {shop: myshop}, // find a document with that filter
+       // var shop = new Shop({ shop: store,accessToken:newaccessToken });
+       Shop.findOneAndUpdate(
+          {shop: store}, // find a document with that filter
           {accessToken:newaccessToken }, // document to insert when nothing was found
           {upsert: true, new: true}, // options
           function (err, doc) { // callback
