@@ -7,8 +7,8 @@ const Router = require('koa-router');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST, } = process.env;
 const router = new Router();
-
 const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
+
 router.post('/webhooks/products/update', webhook, (ctx) => {
   console.log('received webhook: ', webhook.webhook);
   pr_webhook=Product_webhook(webhook.webhook);
@@ -28,7 +28,7 @@ router.post('/webhooks/order/create', webhook, (ctx) => {
     //console.log('received webhook: ctx.state.webhook');
     ctx.body="second page";
   });
-  const webhook = receiveWebhook({ secret: "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" });
+
 router.post('/server-routes/post',(ctx)=>{
   ctx.boody=ctx.request;
 })
