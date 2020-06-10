@@ -3,6 +3,7 @@ const DropshipProduct=require('../models/dropship_product')
 const User=require('../models/user')
 const Shop=require('../models/shop')
 const Product_webhook=require('../models/webhook')
+const Order=require('../models/order')
 const Router = require('koa-router');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
 const dotenv = require('dotenv');
@@ -19,6 +20,9 @@ router.post('/webhooks/products/update', webhook, (ctx) => {
 });
 router.post('/webhooks/order/create', webhook, (ctx) => {
   console.log('received webhook: ', ctx.state.webhook);
+  order=Order({"webhook_data":ctx.state.webhook});
+  order.save();
+  ctx.response.status = 200;
 });
   router.get('/server-routes/test', (ctx) => {
     console.log('received webhook: ctx.state.webhook');
