@@ -10,6 +10,7 @@ const session = require('koa-session');
 const axios =require('axios');
 const Router = require('koa-router');
 const rootRouter = require('./routes/index');
+const databaseHelper = require('./helpers/databaseHelper');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
 dotenv.config();
 
@@ -38,79 +39,49 @@ app.prepare().then(() => {
       async  afterAuth(ctx) {
         const {shop, accessToken} = ctx.session;
         console.log(accessToken)
-        let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
-        axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
-        } ).catch(function (error) {
-          console.log(error);
-        })
-      //   var shopuser = new Shop({ shop:shop,accessToken:accessToken });      
-      //   Shop.findOneAndUpdate(
-      //     {shop: myshop}, // find a document with that filter
-      //     {accessToken:newaccessToken }, // document to insert when nothing was found
-      //     {upsert: true, new: true}, // options
-      //     function (err, doc) { // callback
-      //         if (err) {
-      //            console.log(err)
-      //         } 
-      //     }
-      // );      
+        // let url="https://aladdin-dropshipper-server.herokuapp.com/register_shop";
+        // axios.post(url,{"shop":shop,"accessToken":accessToken}).then( (response)=>{         
+        // } ).catch(function (error) {
+        //   console.log(error);
+        // })
+        databaseHelper.updataToken(shop, accessToken);
         ctx.cookies.set('shopOrigin', shop, {
           httpOnly: false,
           secure: true,
           sameSite: 'none'
         });
-        // ctx.cookies.set('accessToken', accessToken, {
-        //   httpOnly: false,
-        //   secure: true,
-        //   sameSite: 'none'
-        // });
-        const registration = await registerWebhook({
-          address: `${HOST}/webhooks/products/create`,
-          topic: 'PRODUCTS_CREATE',
+        const products_webhook = await registerWebhook({
+          address: `${HOST}/webhooks/products/update`,
+          topic: 'PRODUCTS_UPDATE',
           accessToken,
           shop,
           apiVersion: ApiVersion.October19
         });
  
-        if (registration.success) {
-          console.log('Successfully registered webhook!');
+        if (products_webhook.success) {
+          console.log('Successfully registered products update webhook!');
         } else {
-          console.log('Failed to register webhook', registration.result);
+          console.log('Failed to register products update webhook', products_webhook.result);
+        }
+        const orders_webhook = await registerWebhook({
+          address: `${HOST}/webhooks/order/create`,
+          topic: 'ORDERS_CREATE',
+          accessToken,
+          shop,
+          apiVersion: ApiVersion.October19
+        });
+ 
+        if (orders_webhook.success) {
+          console.log('Successfully registered orders_webhook!');
+        } else {
+          console.log('Failed to register orders_webhook', orders_webhook.result);
         }
         ctx.redirect('/');
-      },
-      
+      },  
     }),
 
   );
-  // app.use(
-  //   // receive webhooks
-  //   receiveWebhook({
-  //     path: '/webhooks/products/create',
-  //     secret: SHOPIFY_SECRET,
-  //     // called when a valid webhook is received
-  //     onReceived(ctx) {
-  //       console.log('received webhook: ', ctx.state.webhook);
-  //     },
-  //   }),
-  // );
 
-  const wkcheck=`${HOST}/webhooks/products/create`;
-  console.log(wkcheck);
-  console.log(SHOPIFY_API_SECRET_KEY);
-  router.get('/server-routes/test', (ctx) => {
-   // console.log('received webhook: ctx.state.webhook');
-    ctx.body="oter html page route"
-  });
-  // module.exports = function *(app){
-    
-    const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
-    router.post('/server-routes/post',(ctx)=>{
-      ctx.boody=ctx.request;
-    })
-    router.post('/webhooks/products/create', webhook, (ctx) => {
-      console.log('received webhook: ', ctx.state.webhook);
-    });
   server.use(graphQLProxy({version: ApiVersion.October19}))
 
   router.get('*', verifyRequest(), async (ctx) => {

@@ -5,8 +5,21 @@ const Shop=require('../models/shop')
 const Product_webhook=require('../models/webhook')
 const Router = require('koa-router');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
-
+const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST, } = process.env;
 const router = new Router();
+
+const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
+router.post('/webhooks/products/update', webhook, (ctx) => {
+  console.log('received webhook: ', webhook.webhook);
+  pr_webhook=Product_webhook(webhook.webhook);
+  pr_webhook.save();
+  ctx.response.status = 200;
+});
+router.post('/webhooks/order/create', webhook, (ctx) => {
+  console.log('received webhook: ', webhook);
+});
+
+
   router.get('/server-routes/test', (ctx) => {
     console.log('received webhook: ctx.state.webhook');
     ctx.body="oter html page route";
@@ -19,12 +32,7 @@ const router = new Router();
 router.post('/server-routes/post',(ctx)=>{
   ctx.boody=ctx.request;
 })
-  router.post('/webhooks/products/create', webhook, (ctx) => {
-    console.log('received webhook: ', ctx.state.webhook);
-    pr_webhook=Product_webhook(ctx.request.query);
-    pr_webhook.save();
-    ctx.response.status = 200;
-  });
+
   // router.get('/products', async function(ctx){
       
   //  // const{title,product_type}= req.body;
