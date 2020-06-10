@@ -5,6 +5,8 @@ const Shop=require('../models/shop')
 const Product_webhook=require('../models/webhook')
 const Router = require('koa-router');
 const {receiveWebhook, registerWebhook} = require('@shopify/koa-shopify-webhooks');
+const dotenv = require('dotenv');
+dotenv.config();
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY,HOST, } = process.env;
 const router = new Router();
 const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
