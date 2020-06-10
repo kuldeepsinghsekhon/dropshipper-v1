@@ -13,7 +13,7 @@ const webhook = receiveWebhook({secret: SHOPIFY_API_SECRET_KEY});
 
 router.post('/webhooks/products/update', webhook, (ctx) => {
   console.log('received webhook: ', ctx.state.webhook);
-  pr_webhook=Product_webhook(ctx.state.webhook);
+  pr_webhook=Product_webhook({"webhook_data":ctx.state.webhook});
   pr_webhook.save();
   ctx.response.status = 200;
 });
