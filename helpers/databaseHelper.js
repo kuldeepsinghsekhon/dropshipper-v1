@@ -1,5 +1,5 @@
 const Store=require('../models/shop');
-exports ={
+module.exports ={
     updataToken:function(myshop,newaccessToken){
         console.log(newaccessToken)
         var shopifystore = new Store({ shop: myshop,accessToken:newaccessToken });
