@@ -34,6 +34,7 @@ export default class ManageOrders extends React.Component {
   renderItem(item) {
    
     const {order_id,customer, email, shipping_address,created_at,line_items} = item;
+    const products =line_items.map((product) => {<p>product.name</p>});
     let button;
 
  
@@ -50,7 +51,7 @@ export default class ManageOrders extends React.Component {
         <h3>
           <TextStyle variation="strong">{customer.first_name}</TextStyle>
         </h3>
-        <div>{line_items.map((product) =>{ <p>product.name</p>})}</div>
+        <div>{products}</div>
           {button}
         </ResourceItem> 
     );
