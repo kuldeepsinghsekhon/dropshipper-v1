@@ -7,7 +7,7 @@ const stripHtml =require('string-strip-html');
 var product={title:""};
 import Cookies from 'js-cookie';
 const accessToken=Cookies.get("accessToken");
-const databaseHelper = require('../helpers/databaseHelper');
+//const databaseHelper = require('../helpers/databaseHelper');
 export default class ManageOrders extends React.Component {
   state = {
     selectedItems: [],
@@ -22,9 +22,13 @@ export default class ManageOrders extends React.Component {
   componentDidMount() {
     const userRole=this.state.userRole;
     if(userRole=='dropshipper'){
-      const orders=databaseHelper.getMyOrders(this.state.dropshipper_shop);
-      console.log(orders)
-      this.setState({orders:orders});
+      let url="https://aladdin-dropshipper-server.herokuapp.com/seller-orders";
+      axios.post(url,{"dropshipper_shop":this.state.dropshipper_shop}).then( (response)=>{ 
+        console.log(response.data )
+        this.setState({orders:response.data});    
+      } ).catch(function (error) {
+        console.log(error);
+      })
     }
  }
   renderItem(item) {
