@@ -1,5 +1,6 @@
 const Shop=require('../models/shop');
-const myorders=require('../models/myorders');
+const order=require('../models/myorders');
+const mongoose = require('mongoose');
 module.exports ={
     updataToken:function(store,newaccessToken){
         console.log(newaccessToken)
@@ -17,7 +18,7 @@ module.exports ={
           });
     },
     getMyOrders:function(store){
-        myorders.find({}, function (err, orders) {
+        order.find({}, function (err, orders) {
             if(err){
                 console.log(err);
             }    
