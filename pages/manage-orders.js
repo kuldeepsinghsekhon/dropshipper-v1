@@ -33,7 +33,7 @@ export default class ManageOrders extends React.Component {
  }
   renderItem(item) {
    
-    const {order_id,customer, email, shipping_address,created_at} = item;
+    const {order_id,customer, email, shipping_address,created_at,line_items} = item;
     let button;
 
  
