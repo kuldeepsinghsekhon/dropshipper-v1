@@ -17,12 +17,13 @@ module.exports ={
           });
     },
     getMyOrders:function(store){
-        orders.find({}, function (err, orders) {
-            if(err){
-                console.log(err);
-            }    
-            console.log(orders)
-            return orders;
-          });
+        // orders.find({}, function (err, orders) {
+        //     if(err){
+        //         console.log(err);
+        //     }    
+        //     console.log(orders)
+        //     return orders;
+        //   });
+        return [{"email":"email@SpeechGrammarList.com"}];
     }
 }
