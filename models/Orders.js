@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
+  domain: String,
     webhook_data: {type: Object},
     order_id: String,
      email: String,
