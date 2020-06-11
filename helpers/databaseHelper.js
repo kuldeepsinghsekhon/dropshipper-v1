@@ -1,5 +1,5 @@
 const Shop=require('../models/shop');
-const orders=require('../models/Orders');
+const Order=require('../models/myorders');
 module.exports ={
     updataToken:function(store,newaccessToken){
         console.log(newaccessToken)
@@ -17,13 +17,13 @@ module.exports ={
           });
     },
     getMyOrders:function(store){
-        // orders.find({}, function (err, orders) {
-        //     if(err){
-        //         console.log(err);
-        //     }    
-        //     console.log(orders)
-        //     return orders;
-        //   });
+        Order.find({}, function (err, orders) {
+            if(err){
+                console.log(err);
+            }    
+            console.log(orders)
+            return orders;
+          });
         return [{"email":"email@SpeechGrammarList.com","cutomer":{"first_name":"test name"},"line_items:{}"}];
     }
 }
