@@ -17,16 +17,16 @@ module.exports ={
           });
     },
     getMyOrders:function(store){
-   
+        var query =Order.find();
      query.where('domain').equals(store);
       //where('age').gt(17).lt(50).  //Additional where query
       query.limit(50);
       //query.sort({ title: -1 });
       //select('name age').
-      query.exec(function(err,products)
+      query.exec(function(err,orders)
       {
         if(err)  return {};
-        return doc;
+        return orders;
       });
     }
 }
