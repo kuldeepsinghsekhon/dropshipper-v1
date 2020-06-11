@@ -8,7 +8,7 @@ var product={title:""};
 import Cookies from 'js-cookie';
 const accessToken=Cookies.get("accessToken");
 const databaseHelper = require('../helpers/databaseHelper');
-export default class ResourceListWithProducts extends React.Component {
+export default class ManageOrders extends React.Component {
   state = {
     selectedItems: [],
     orders:[],

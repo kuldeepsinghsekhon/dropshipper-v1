@@ -1,5 +1,5 @@
 const Shop=require('../models/shop');
-const Order=require('../models/Orders');
+const orders=require('../models/Orders');
 module.exports ={
     updataToken:function(store,newaccessToken){
         console.log(newaccessToken)
@@ -17,7 +17,7 @@ module.exports ={
           });
     },
     getMyOrders:function(store){
-        Order.find({ 'domain': store }, function (err, orders) {
+        orders.find({}, function (err, orders) {
             if(err){
                 console.log(err);
             }    
