@@ -16,15 +16,17 @@ module.exports ={
               }
           });
     },
-    getMyOrders:function(store,newaccessToken){
-      
-        Order.find({domain: store}, // find a document with that filter
-          function (err, doc) { // callback
-              if (err) {
-                 return {};
-              } else {
-                  return doc;
-              }
-          });
+    getMyOrders:function(store){
+   
+     query.where('domain').equals(store);
+      //where('age').gt(17).lt(50).  //Additional where query
+      query.limit(50);
+      //query.sort({ title: -1 });
+      //select('name age').
+      query.exec(function(err,products)
+      {
+        if(err)  return {};
+        return doc;
+      });
     }
 }
