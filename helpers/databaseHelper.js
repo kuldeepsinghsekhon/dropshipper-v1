@@ -18,7 +18,10 @@ module.exports ={
     },
     getMyOrders:function(store){
         Order.find({ 'domain': store }, function (err, orders) {
-            if(err)  return {};
+            if(err){
+                console.log(err);
+            }    
+            console.log(orders)
             return orders;
           });
     }

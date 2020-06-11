@@ -23,6 +23,7 @@ export default class ResourceListWithProducts extends React.Component {
     const userRole=this.state.userRole;
     if(userRole=='dropshipper'){
       const orders=databaseHelper.getMyOrders(this.state.dropshipper_shop);
+      console.log(orders)
       this.setState({orders:orders});
     }
  }
