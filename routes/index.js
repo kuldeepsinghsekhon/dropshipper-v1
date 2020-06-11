@@ -22,7 +22,7 @@ router.post('/webhooks/order/create', webhook, (ctx) => {
   console.log('received webhook: ', ctx.state.webhook);
   const data=ctx.state.webhook;
   const payload=data.payload;
-  order=Order({"webhook_data":data,"domain":data.domain,"billing_address":payload.billing_address,"shipping_address":payload.shipping_address,"customer":payload.customer,"email":payload.email,"order_id":payload.id});
+  order=Order({"webhook_data":data,"domain":data.domain,"line_items":payload.line_items,"billing_address":payload.billing_address,"shipping_address":payload.shipping_address,"customer":payload.customer,"email":payload.email,"order_id":payload.id});
   order.save();
   ctx.response.status = 200;
 });
