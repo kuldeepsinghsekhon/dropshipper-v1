@@ -37,7 +37,7 @@ class Selling_products extends React.Component {
       container.shop=shop;
       const price = product.variants.edges[0].node.price;
       container.price=price;
-      console.log("price"+ price)
+      //console.log("price"+ price)
       let pimages=product.images;
       container.images= pimages.map((image)=>image.originalSrc)
     // console.log(container.images)
