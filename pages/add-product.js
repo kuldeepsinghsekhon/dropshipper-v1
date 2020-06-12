@@ -40,18 +40,18 @@ import {
   
   class EditProduct extends React.Component {
     state = {
-      discount: '',
+        commission: '',
       price: '',
       variantId: '',
       showToast: false,
     };
   
     componentDidMount() {
-      this.setState({ discount: this.itemToBeConsumed() });
+      this.setState({ commission: this.itemToBeConsumed() });
     }
   
     render() {
-      const { name, price, discount, variantId } = this.state;
+      const { title, price, commission } = this.state;
       return (
         <Mutation
           mutation={UPDATE_PRICE}
@@ -75,7 +75,7 @@ import {
                       {showError}
                     </Layout.Section>
                     <Layout.Section>
-                      <DisplayText size="large">{name}</DisplayText>
+                      <DisplayText size="large">{title}</DisplayText>
                       <Form>
                         <Card sectioned>
                           <FormLayout>
@@ -89,10 +89,10 @@ import {
                               />
                               <TextField
                                 prefix="$"
-                                value={discount}
-                                onChange={this.handleChange('discount')}
-                                label="Discounted price"
-                                type="discount"
+                                value={commission}
+                                onChange={this.handleChange('commission')}
+                                label="Increase price"
+                                type="commission"
                               />
                             </FormLayout.Group>
                             <p>
@@ -110,20 +110,20 @@ import {
                                 //   price: discount,
                                 // };
                                 const ProductInput= {
-                                      "title": "tshirt5",
-                                      "descriptionHtml": "<h3>some html description</h3>",
-                                      "vendor": "xxxx",
+                                      "title": item.title,
+                                      "descriptionHtml": item.body_html,
+                                      "vendor": "dropShipper",
                                       "tags": [
                                         "dfsf",
                                         "dsfdsf"
                                       ],
-                                      "productType": "cloths",
+                                      "productType":item.product_type,
                                       "published":true,
                                       "options":["Size"],
                                       "variants":[
                                         {
                                           "barcode":"123",
-                                          "price":50.50,
+                                          "price":price,
                                           "sku":"abc123",
                                           "options":[
                                             "42"
@@ -145,11 +145,11 @@ import {
                               },
                             },
                           ]}
-                          secondaryActions={[
-                            {
-                              content: 'Remove discount',
-                            },
-                          ]}
+                        //   secondaryActions={[
+                        //     {
+                        //       content: 'Remove discount',
+                        //     },
+                        //   ]}
                         />
                       </Form>
                     </Layout.Section>
@@ -168,11 +168,11 @@ import {
   
     itemToBeConsumed = () => {
       const item = store.get('item');
-      const price = item.variants.edges[0].node.price;
-      const variantId = item.variants.edges[0].node.id;
-      const discounter = price * 0.1;
-      this.setState({ price, variantId });
-      return (price - discounter).toFixed(2);
+      const price = item.price;
+      //const variantId = item.variants.edges[0].node.id;
+      const commission = price * 0.1;
+      this.setState({ price});
+      return (price + commission).toFixed(2);
     };
   }
   
