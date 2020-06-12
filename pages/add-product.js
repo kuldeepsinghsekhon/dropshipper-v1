@@ -109,8 +109,7 @@ import {
                                 //   id: variantId,
                                 //   price: discount,
                                 // };
-                                const ProductInput={
-                                    "input": {
+                                const ProductInput= {
                                       "title": "tshirt5",
                                       "descriptionHtml": "<h3>some html description</h3>",
                                       "vendor": "xxxx",
@@ -139,7 +138,6 @@ import {
                                           "src": "https://images-na.ssl-images-amazon.com/images/I/61gZIYJ9xlL._SY606_.jpg"
                                         }
                                       ]
-                                    }
                                   };
                                 handleSubmit({
                                   variables: { input: ProductInput },
