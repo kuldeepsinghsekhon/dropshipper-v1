@@ -6,6 +6,7 @@ var ProductModelSchema = new Schema({
     tags: [String],
     product_type:String,
     vendor:String,
+    price:String,
     variants: [
         Object
       ],

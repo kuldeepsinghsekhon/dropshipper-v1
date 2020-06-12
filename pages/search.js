@@ -100,7 +100,7 @@ export default class ResourceListWithProducts extends React.Component {
     redirect.dispatch(
       Redirect.Action.APP,'/add-product'
     );
-   const{title,product_type,body_html,variants,shop}=item;
+   const{title,product_type,body_html,variants,shop,price}=item;
   
   const vendor="dropshipper"
   const images =item.images.map((image)=>{
