@@ -14,19 +14,19 @@ class Selling_products extends React.Component {
   static contextType = Context;
   
   state = { open: false,userRole:store.get('userRole') };
-   handleSelection(resources){
+   handleSelection = (resources) => {
 //     const idsFromResources = resources.selection.map((product) => product.id);
 //     this.setState({ open: false });
 //     store.set('ids', idsFromResources);
 // console.log(idsFromResources)
-    //const ids =resources.selection.map((product) => product.id);
-    // store.set('ids',ids);
+    const ids =resources.selection.map((product) => product.id);
+     store.set('ids',ids);
     const app = this.context;
     const redirect = Redirect.create(app);
     const url="https://aladdin-dropshipper-server.herokuapp.com/products/new";
     this.setState({ open: false })
      const productcontainer = resources.selection.map((product) =>{
-       console.log(product)
+       //console.log(product)
       const container = {};
       container.title = product.title;
       container.body_html = product.descriptionHtml;
@@ -35,12 +35,12 @@ class Selling_products extends React.Component {
       container.vendor='dropshipper';
       container.shopifyProductId=product.id;
       container.shop=shop;
-      const price = product.variants.edges[0].node.price;
-      container.price=price;
-      console.log("price"+ price)
+      // const price = product.variants.edges[0].node.price;
+      // container.price=shop;
+     // console.log(product.images)
       let pimages=product.images;
       container.images= pimages.map((image)=>image.originalSrc)
-    // console.log(container.images)
+     console.log(container.images)
       axios.post(url,container).then( ( response ) => {
         const ids =response.data.map((product) => product.shopifyProductId);
         store.set('ids', ids);  
@@ -54,14 +54,8 @@ class Selling_products extends React.Component {
   shop_products(){
     let url="https://aladdin-dropshipper-server.herokuapp.com/shop_products";
     axios.post(url,{"shop":shop}).then( (response)=>{ 
-      const isDataAvailable = response.data && response.data.length;
-               if(isDataAvailable){
-                const ids =response.data.map((product) => product.shopifyProductId);
-                store.set('ids', ids);    
-               }else{
-                store.set('ids', []);  
-               }
-     
+      const ids =response.data.map((product) => product.shopifyProductId);
+      store.set('ids', ids);    
       // console.log(ids)    
     } ).catch(function (error) {
       console.log(error);
@@ -92,7 +86,7 @@ class Selling_products extends React.Component {
     />
     <ResourcePicker
           resourceType="Product"
-          showVariants={true}
+          showVariants={false}
           open={this.state.open}
           onSelection={(resources) => this.handleSelection(resources)}
           onCancel={() => this.setState({ open: false })}
