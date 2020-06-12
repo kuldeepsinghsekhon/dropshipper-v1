@@ -45,7 +45,7 @@ import {
       price: '',
       variantId: '',
       showToast: false,
-      item:null,
+      item:store.get('item'),
     };
   
     componentDidMount() {
@@ -53,7 +53,7 @@ import {
     }
   
     render() {
-      const { title, price, commission } = this.state;
+      const { title, price, commission,item } = this.state;
       return (
         <Mutation
           mutation={UPDATE_PRICE}
@@ -170,6 +170,7 @@ import {
   
     itemToBeConsumed = () => {
       const item = store.get('item');
+      
       const price = item.price;
       //const variantId = item.variants.edges[0].node.id;
       const commission = price * 0.1;
