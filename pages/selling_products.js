@@ -86,7 +86,7 @@ class Selling_products extends React.Component {
     />
     <ResourcePicker
           resourceType="Product"
-          showVariants={false}
+          showVariants={true}
           open={this.state.open}
           onSelection={(resources) => this.handleSelection(resources)}
           onCancel={() => this.setState({ open: false })}
