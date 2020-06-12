@@ -16,17 +16,26 @@ import {
   import { Mutation } from 'react-apollo';
   
   const UPDATE_PRICE = gql`
-   mutation productVariantUpdate($input: ProductVariantInput!) {
-     productVariantUpdate(input: $input) {
-       product {
-         title
-       }
-       productVariant {
-         id
-         price
-       }
-     }
-   }
+  mutation productCreate($input: ProductInput!) {
+    productCreate(input: $input) {
+      product {
+        id
+        title
+        descriptionHtml
+        vendor
+        tags
+        productType
+      }
+      
+      shop {
+        id
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
   `;
   
   class EditProduct extends React.Component {

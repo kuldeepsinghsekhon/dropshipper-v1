@@ -96,8 +96,10 @@ export default class ResourceListWithProducts extends React.Component {
     const shopifyProductId=item.shopifyProductId;
     const app = this.context;
     const redirect = Redirect.create(app);
-    store.set('id',shopifyProductId);
-    Redirect.Action.APP,'/add-product'
+    store.set('item',shopifyProductId);
+    redirect.dispatch(
+      Redirect.Action.APP,'/add-product'
+    );
    const{title,product_type,body_html,variants,shop}=item;
   
   const vendor="dropshipper"
