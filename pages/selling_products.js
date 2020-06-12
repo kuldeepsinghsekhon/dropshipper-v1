@@ -14,12 +14,12 @@ class Selling_products extends React.Component {
   static contextType = Context;
   
   state = { open: false,userRole:store.get('userRole') };
-   handleSelection = (resources) => {
+   handleSelection(resources){
 //     const idsFromResources = resources.selection.map((product) => product.id);
 //     this.setState({ open: false });
 //     store.set('ids', idsFromResources);
 // console.log(idsFromResources)
-    const ids =resources.selection.map((product) => product.id);
+    //const ids =resources.selection.map((product) => product.id);
     // store.set('ids',ids);
     const app = this.context;
     const redirect = Redirect.create(app);
