@@ -20,13 +20,13 @@ class Selling_products extends React.Component {
 //     store.set('ids', idsFromResources);
 // console.log(idsFromResources)
     const ids =resources.selection.map((product) => product.id);
-     store.set('ids',ids);
+    // store.set('ids',ids);
     const app = this.context;
     const redirect = Redirect.create(app);
     const url="https://aladdin-dropshipper-server.herokuapp.com/products/new";
     this.setState({ open: false })
      const productcontainer = resources.selection.map((product) =>{
-       //console.log(product)
+       console.log(product)
       const container = {};
       container.title = product.title;
       container.body_html = product.descriptionHtml;
@@ -37,10 +37,10 @@ class Selling_products extends React.Component {
       container.shop=shop;
       const price = product.variants.edges[0].node.price;
       container.price=price;
-      console.log(product.images)
+      console.log("price"+ price)
       let pimages=product.images;
       container.images= pimages.map((image)=>image.originalSrc)
-     console.log(container.images)
+    // console.log(container.images)
       axios.post(url,container).then( ( response ) => {
         const ids =response.data.map((product) => product.shopifyProductId);
         store.set('ids', ids);  
