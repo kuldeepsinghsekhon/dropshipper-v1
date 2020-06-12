@@ -3,11 +3,14 @@ import {Page,Spinner,Filters, Card,Button, ResourceItem, ResourceList, TextStyle
 import {CirclePlusMinor} from '@shopify/polaris-icons';
 const axios =require('axios');
 const store= require('store-js')
+import { Redirect } from '@shopify/app-bridge/actions';
+import { Context } from '@shopify/app-bridge-react';
 const stripHtml =require('string-strip-html');
 var product={title:""};
 import Cookies from 'js-cookie';
 const accessToken=Cookies.get("accessToken");
 export default class ResourceListWithProducts extends React.Component {
+  static contextType = Context;
   state = {
     selectedItems: [],
     products:[],
@@ -90,8 +93,13 @@ export default class ResourceListWithProducts extends React.Component {
     console.log('handleQueryValueRemove'+value)
   }
   addproduct(item){
+    const shopifyProductId=item.shopifyProductId;
+    const app = this.context;
+    const redirect = Redirect.create(app);
+    store.set('id',shopifyProductId);
+    Redirect.Action.APP,'/add-product'
    const{title,product_type,body_html,variants,shop}=item;
-   const shopifyProductId=item.shopifyProductId;
+  
   const vendor="dropshipper"
   const images =item.images.map((image)=>{
     const container = {};
@@ -109,15 +117,15 @@ export default class ResourceListWithProducts extends React.Component {
       "images":images
     }
   
-const url="http://localhost:3000/addto_shop";
-const dspshop=Cookies.get("shopOrigin");
-axios.post(url,{"product":product,"dropshipper_shop":dspshop,"seller_shop":shop,"shopifyProductId":shopifyProductId}).then( (response)=>{ 
- console.log("response.data") 
- console.log(response.data)        
-} ).catch(function (error) {
-  console.log("error");
-  console.log(error);
-})
+// const url="http://localhost:3000/addto_shop";
+// const dspshop=Cookies.get("shopOrigin");
+// axios.post(url,{"product":product,"dropshipper_shop":dspshop,"seller_shop":shop,"shopifyProductId":shopifyProductId}).then( (response)=>{ 
+//  console.log("response.data") 
+//  console.log(response.data)        
+// } ).catch(function (error) {
+//   console.log("error");
+//   console.log(error);
+// })
   
   }
   render() {
