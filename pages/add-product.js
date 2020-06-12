@@ -109,7 +109,7 @@ import {
                                 //   id: variantId,
                                 //   price: discount,
                                 // };
-                                const productVariableInput={
+                                const ProductInput={
                                     "input": {
                                       "title": "tshirt5",
                                       "descriptionHtml": "<h3>some html description</h3>",
@@ -142,7 +142,7 @@ import {
                                     }
                                   };
                                 handleSubmit({
-                                  variables: { input: productVariableInput },
+                                  variables: { input: ProductInput },
                                 });
                               },
                             },
