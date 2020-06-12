@@ -47,7 +47,7 @@ import {
     };
   
     componentDidMount() {
-      //this.setState({ discount: this.itemToBeConsumed() });
+      this.setState({ discount: this.itemToBeConsumed() });
     }
   
     render() {
