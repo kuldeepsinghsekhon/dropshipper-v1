@@ -59,12 +59,14 @@ import {
           mutation={UPDATE_PRICE}
         >
           {(handleSubmit, { error, data }) => {
+              console.log(data);
+              console.log(data.productCreate.product.id);
             const showError = error && (
               <Banner status="critical">{error.message}</Banner>
             );
-            const showToast = data && data.productVariantUpdate && (
+            const showToast = data && data.productCreate && (
               <Toast
-                content="Sucessfully updated"
+                content="Sucessfully Imported"
                 onDismiss={() => this.setState({ showToast: false })}
               />
             );
