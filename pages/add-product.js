@@ -40,10 +40,12 @@ import {
   
   class EditProduct extends React.Component {
     state = {
+        title:'',
         commission: '',
       price: '',
       variantId: '',
       showToast: false,
+      item:null,
     };
   
     componentDidMount() {
