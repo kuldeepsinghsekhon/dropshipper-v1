@@ -47,7 +47,7 @@ import {
     };
   
     componentDidMount() {
-      this.setState({ discount: this.itemToBeConsumed() });
+      //this.setState({ discount: this.itemToBeConsumed() });
     }
   
     render() {
@@ -105,10 +105,42 @@ import {
                             {
                               content: 'Save',
                               onAction: () => {
-                                const productVariableInput = {
-                                  id: variantId,
-                                  price: discount,
-                                };
+                                // const productVariableInput = {
+                                //   id: variantId,
+                                //   price: discount,
+                                // };
+                                const productVariableInput={
+                                    "input": {
+                                      "title": "tshirt5",
+                                      "descriptionHtml": "<h3>some html description</h3>",
+                                      "vendor": "xxxx",
+                                      "tags": [
+                                        "dfsf",
+                                        "dsfdsf"
+                                      ],
+                                      "productType": "cloths",
+                                      "published":true,
+                                      "options":["Size"],
+                                      "variants":[
+                                        {
+                                          "barcode":"123",
+                                          "price":50.50,
+                                          "sku":"abc123",
+                                          "options":[
+                                            "42"
+                                          ]
+                                        }
+                                      ],
+                                      "images": [
+                                        {
+                                          "src": "https://images-na.ssl-images-amazon.com/images/I/719PHq579pL._SL1500_.jpg"
+                                        },
+                                        {
+                                          "src": "https://images-na.ssl-images-amazon.com/images/I/61gZIYJ9xlL._SY606_.jpg"
+                                        }
+                                      ]
+                                    }
+                                  };
                                 handleSubmit({
                                   variables: { input: productVariableInput },
                                 });
