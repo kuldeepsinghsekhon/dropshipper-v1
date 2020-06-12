@@ -60,7 +60,7 @@ import {
         >
           {(handleSubmit, { error, data }) => {
               console.log(data);
-              console.log(data.productCreate.product.id);
+          
             const showError = error && (
               <Banner status="critical">{error.message}</Banner>
             );
