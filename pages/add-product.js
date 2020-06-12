@@ -134,14 +134,8 @@ import {
                                           ]
                                         }
                                       ],
-                                      "images": [
-                                        {
-                                          "src": "https://images-na.ssl-images-amazon.com/images/I/719PHq579pL._SL1500_.jpg"
-                                        },
-                                        {
-                                          "src": "https://images-na.ssl-images-amazon.com/images/I/61gZIYJ9xlL._SY606_.jpg"
-                                        }
-                                      ]
+                                      "images":item.images
+                                  
                                   };
                                 handleSubmit({
                                   variables: { input: ProductInput },
