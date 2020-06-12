@@ -96,6 +96,13 @@ export default class ResourceListWithProducts extends React.Component {
     const shopifyProductId=item.shopifyProductId;
     const app = this.context;
     const redirect = Redirect.create(app);
+    const images =item.images.map((image)=>{
+      const container = {};
+      container.src = image;
+      return container;
+    
+    })
+    console.log(images);
     store.set('item',item);
     redirect.dispatch(
       Redirect.Action.APP,'/add-product'
@@ -103,13 +110,7 @@ export default class ResourceListWithProducts extends React.Component {
    const{title,product_type,body_html,variants,shop,price}=item;
   
   const vendor="dropshipper"
-  const images =item.images.map((image)=>{
-    const container = {};
-    container.src = image;
-    return container;
-  
-  })
-  console.log(images);
+ 
   const product={
     "title": title,
       "body_html":body_html,

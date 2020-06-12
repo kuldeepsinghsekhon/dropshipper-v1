@@ -54,6 +54,12 @@ import {
   
     render() {
       const { title, price, commission,item } = this.state;
+      const images =item.images.map((image)=>{
+        const container = {};
+        container.src = image;
+        return container;
+      
+      })
       return (
         <Mutation
           mutation={UPDATE_PRICE}
@@ -134,7 +140,7 @@ import {
                                           ]
                                         }
                                       ],
-                                      "images":item.images
+                                      "images":images
                                   
                                   };
                                 handleSubmit({
